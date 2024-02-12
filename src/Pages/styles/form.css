@@ -1,0 +1,18 @@
+.toogle {
+  margin: 5px 0 10px 0;
+}
+[type="checkbox"]:not(:checked) + label::before,
+[type="checkbox"]:checked + label::before {
+  width: 81px;
+}
+
+.toggle-switch-non {
+  left: -48px;
+  color: #34495e;
+}
+
+[type="checkbox"]:not(:checked) + label::after,
+[type="checkbox"]:checked + label::after {
+  width: 35px;
+  border-radius: 15px;
+}

@@ -1,0 +1,15 @@
+[
+    {
+        "title": "Mon Profil",
+        "icon": "bx bx-user",
+        "path": "/Profile",
+        "droits": 3
+    },
+    {
+        "title": "Boutiques",
+        "icon": "bx bx-message",
+        "path": "/Boutiques",
+        "plus": true,
+        "plusPath": "/Boutique_Add"
+    }
+]
