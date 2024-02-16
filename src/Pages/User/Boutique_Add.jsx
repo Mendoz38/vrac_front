@@ -31,14 +31,10 @@ const Boutique_Add = (props) => {
     console.log("Data :", data);
     addBoutique(data)
       .then((res) => {
-        //console.log("ssssssssssssss", res);
         if (res.status !== 200) {
-          //console.log("res.status", res.status);
           setMessage("Erreur lors de la création");
-          //console.log("status", res.status);
         } else {
           setMessage(res.msg);
-          //console.log("zzz", res.msg);
         }
       })
       .catch((err) => {

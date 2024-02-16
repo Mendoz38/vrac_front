@@ -16,3 +16,53 @@
   width: 35px;
   border-radius: 15px;
 }
+
+
+.model_etikette {
+    width: 400px;
+    height: 200px;
+    border: 1px solid black; 
+    position:relative;
+ }   
+
+.box {
+  position: "absolute";
+  font-size: 0.8em;
+  padding: 3px;
+} 
+
+.box h4 {
+  font-size: 1em;
+  font-weight:bold;
+} 
+.box p {
+  text-indent: 0;
+}
+
+.react-draggable {
+    width: 100px;
+  height: 100px;
+  background-color: lightgreen;
+  position: absolute;
+  transform: translate(172px, -66px);
+  left: 100px;
+  top: 100px;
+}
+
+.projects-table {
+	background: #273142;
+	width: 100%;
+	
+	td,
+	th {
+		color: white;
+		padding: 10px 22px;
+		vertical-align: middle;
+	}
+	
+	td p {
+		font-size: 12px;
+	}
+	
+	}
+	

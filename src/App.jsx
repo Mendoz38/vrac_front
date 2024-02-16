@@ -19,6 +19,7 @@ import Register from "./Pages/User/Register";
 import Forgot from "./Pages/User/Forgot";
 import Boutiques from "./Pages/User/Boutiques";
 import Boutique_Add from "./Pages/User/Boutique_Add";
+import Boutique_Edit from "./Pages/User/Boutique_Edit";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
               <Route exact path="/Forgot" element={<Forgot />} />
               <Route exact path="/Boutiques" element={<Boutiques />} />
               <Route exact path="/Boutique_Add" element={<RequireAuth child={Boutique_Add} auth={true} />} />
+              <Route exact path="/Boutique_Edit/:id" element={<RequireAuth child={Boutique_Edit} auth={true} />} />
 
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
