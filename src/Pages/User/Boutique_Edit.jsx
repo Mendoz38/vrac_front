@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getOneBoutique, getCoordEtikette } from "../../api/boutique";
 import "../styles/form.css";
@@ -6,16 +6,14 @@ import "../styles/form.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-import Draggable, { DraggableCore } from "react-draggable";
+import Draggable from "react-draggable";
 
 const Boutiques_Edit = (props) => {
   const params = useParams();
   const [listeBoutiques, setDetailBoutiques] = useState([]);
-  const [coord, setCoord] = useState([]);
-  const element1Ref = useRef(null);
-  const element2Ref = useRef(null);
+  const [box, setBox] = useState([]);
   const [positions, setPositions] = useState({});
-  console.log("positions : ", positions);
+  const [draggingPositions, setDraggingPositions] = useState({});
 
   useEffect(() => {
     getOneBoutique(params.id)
@@ -23,73 +21,61 @@ const Boutiques_Edit = (props) => {
         setDetailBoutiques(result[0]);
         getCoordEtikette(result[0].id)
           .then((result) => {
-            setCoord(result[0]);
+            setBox(result);
+            console.log("box : ", box)
           }) 
           .catch((err) => console.log(err));
       })
-
       .catch((err) => console.log(err));
   }, [props]);
 
-  const handleStop = (id, e, data) => {
-    const { x, y } = data;
-    setPositions((prevPositions) => ({
-      ...prevPositions,
-      [id]: { x, y },
-    }));
-    // Sauvegardez les positions dans localStorage ou un autre système de stockage ici
+  const onStop = (id, e, data) => {
+    const newX = parseInt(box.find(item => item.id === id).x) + data.x;
+    const newY = parseInt(box.find(item => item.id === id).y) + data.y;
+    console.log(`Nouvelle position de la box ${id} : x: ${newX}px, y: ${newY}px`);
   };
+
 
   return (
     <>
-      {listeBoutiques  && coord  && (
+      {listeBoutiques && box && (
         <>
           <h1 className="centre">Modifier {listeBoutiques.nom_boutique} </h1>
           <section>
+            {box.map((item) => (
+              <div key={item.id}>
+                <p>
+                  id: {item.id} | Nom: {item.nom} | X: {item.x}, Y: {item.y} | Couleur: {item.couleur} | Width: {item.width} | Height: {item.height} |
+                </p>
+              </div>
+            ))}
           </section>
 
           <div className="model_etikette">
-            <Draggable
-              nodeRef={element1Ref}
+            {box.map((item) => (
+              <Draggable
+              grid={[10, 10]}
+              nodeRef={item.ref}
               bounds="parent"
-              onStop={(e, data) => handleStop("element1", e, data)}
-              position={positions["element1"]}
-            >
-              <div
-                ref={element1Ref}
-                style={{
-                  width: "200px",
-                  height: "50px",
-                  backgroundColor: "lightblue",
-                  position: "absolute",
-                }}
+              key={item.id}
+              onStop={(e, data) => onStop(item.id, e, data)}
               >
-                Produit
-              </div>
-            </Draggable>
-
-            <Draggable
-              nodeRef={element2Ref}
-              bounds="parent"
-              onStop={(e, data) => handleStop("element2", e, data)}
-              position={positions["element2"]}
-            >
-              <div
-                ref={element2Ref}
-                style={{
-                  backgroundColor: "lightgreen",
-                  position: "absolute",
-                  left: `${coord.x2}px`,
-                  top: `${coord.y2}px`,
-                }}
-              >
-                <p>Prix</p>
-                <p>Element : {}</p>
-                <p>Top : {positions.element2 ? positions.element2.y : 'N/A'}</p>
-                <p>left : {coord.x2} </p>
-                <p> left: `${coord.x2}px`, </p>
-              </div>
-            </Draggable>
+          <div
+            className="box"
+            ref={item.ref}
+            style={{
+              backgroundColor: `${item.couleur}`,
+              left: `${item.x}px`,
+              top: `${item.y}px`,
+              width: `${item.width}px`,
+              height: `${item.height}px`,
+            }}
+          >
+            <h4>{item.nom}</h4>
+          </div>
+              </Draggable>
+            ))}
+            
           </div>
         </>
       )}
@@ -98,7 +84,3 @@ const Boutiques_Edit = (props) => {
 };
 
 export default Boutiques_Edit;
-
-/*
- 
-*/
